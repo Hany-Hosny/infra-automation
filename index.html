@@ -1,0 +1,134 @@
+cat << 'EOF' > /home/hany/infra-automation/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Automation Staging</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #111827, #1e293b);
+            color: #f8fafc;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            padding: 50px;
+            border-radius: 20px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background-color: #22c55e;
+            color: #0f172a;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #38bdf8;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 18px;
+        }
+
+        .stack {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .stack span {
+            padding: 10px 18px;
+            border-radius: 12px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #94a3b8;
+            border-top: 1px solid #334155;
+            padding-top: 20px;
+        }
+
+        .highlight {
+            color: #22c55e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="badge">
+            STAGING ENVIRONMENT
+        </div>
+
+        <h1>Infrastructure Automation Pipeline Active</h1>
+
+        <p>
+            Staging node configured successfully with automated provisioning,
+            hardened SSH configuration, and containerized deployment workflow.
+        </p>
+
+        <p>
+            Infrastructure validation completed using
+            <span class="highlight">Docker</span>,
+            <span class="highlight">Linux Automation</span>,
+            and
+            <span class="highlight">Remote DevOps Tooling</span>.
+        </p>
+
+        <div class="stack">
+            <span>Docker</span>
+            <span>Linux</span>
+            <span>Bash Scripting</span>
+            <span>Automation</span>
+            <span>Networking</span>
+            <span>DevOps</span>
+            <span>CI/CD Ready</span>
+        </div>
+
+        <div class="footer">
+            Prepared by Hany Hosny • Infrastructure & DevOps Engineering Lab
+        </div>
+
+    </div>
+
+</body>
+</html>
+EOF
