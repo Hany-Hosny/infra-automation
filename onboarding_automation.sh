@@ -30,3 +30,14 @@ chmod 770 "$DEPLOY_DIR"
 
 echo "Task 1 Complete: User, Group, and Secured Directory are ready!"
 
+# --- 2. Audit & Port Hardening ---
+
+echo -e "\n🔹 [2/5] Printing System Health Report..."
+echo "----------------------------------------"
+echo "Current Active User: $(whoami)"
+echo "Internal IP Address: $(hostname -I | awk '{print $1}')"
+echo "Total Memory Statistics:"
+free -h
+echo "----------------------------------------"
+
+echo "🧹 Auditing active ports and purging legacy print/cups services..."
