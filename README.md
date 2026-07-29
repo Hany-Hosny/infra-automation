@@ -1,127 +1,111 @@
-# Infrastructure Automation & Dockerized HTTPS Nginx Deployment
+# Infrastructure Automation with Docker & Nginx
 
-A production-ready Bash automation script that provisions a secure Linux environment, deploys a Dockerized Nginx web server with HTTPS support, and validates the deployment automatically.
+Automated infrastructure provisioning using Bash, Docker, and Nginx with HTTPS support.
 
----
+## Overview
 
-## 🚀 Features
+This project automates the setup of a basic web server environment on Ubuntu. The script installs Docker (if needed), generates a self-signed SSL certificate, configures an Nginx container, enables HTTPS, and verifies the deployment with an automated health check.
 
-The automation script performs the following tasks:
+## Features
 
-### 1. User & Access Security
-- Verifies that the script is executed as `root` or with `sudo`.
-- Creates a dedicated developer user (`devuser`).
-- Creates a secure developer group (`devgroup`).
-- Configures a protected deployment directory with appropriate ownership and permissions.
+- Root privilege validation
+- Create application user and group
+- Create secure application directory
+- Generate a system health report
+- Install Docker automatically (if not installed)
+- Generate a self-signed SSL certificate using OpenSSL
+- Deploy Nginx in a Docker container
+- HTTP to HTTPS redirection
+- Automatic deployment verification
 
-### 2. System Health Report
-- Displays the current active user.
-- Displays the internal IP address.
-- Shows memory and swap usage.
-- Audits active network ports.
-- Removes legacy `cups` services if present.
+## Project Structure
 
-### 3. TLS Certificate Generation
-- Generates a self-signed SSL/TLS certificate using OpenSSL.
-- Stores the generated certificate and private key for secure HTTPS communication.
-
-### 4. Dockerized Nginx Deployment
-- Verifies or installs Docker automatically.
-- Deploys an Nginx container using a custom `nginx.conf`.
-- Maps:
-  - **HTTP:** `localhost:8080`
-  - **HTTPS:** `localhost:8443`
-- Redirects all HTTP requests to HTTPS.
-
-### 5. Deployment Validation
-
-- Performs an automated health check against the HTTP endpoint.
-- Confirms the expected **301 Moved Permanently** redirect to HTTPS.
-- Verifies that the Nginx container is running successfully.
----
-
-## 📁 Project Structure
-
-```text
+```
 infra-automation/
-├── onboarding_automation.sh
+├── images/
+│   └── demo.png
+├── certs/
+├── index.html
 ├── nginx.conf
-├── README.md
-└── certs/            # Generated automatically (not tracked)
+├── onboarding_automation.sh
+└── README.md
 ```
 
----
-
-## 🛠️ Requirements
-
-- Rocky & Ubuntu Linux
-- Bash
-- OpenSSL
-- Docker
-
----
-
-## ▶️ How to Run
-
-Clone the repository:
-
-```bash
-git clone git@github.com:Hany-Hosny/infra-automation.git
-cd infra-automation
-```
-
-Run the automation script:
-
-```bash
-sudo bash onboarding_automation.sh
-```
-
----
-
-## 🌐 Access the Web Server
-
-HTTP:
-
-```text
-http://localhost:8080
-```
-
-HTTPS:
-
-```text
-https://localhost:8443
-```
-
-If accessing remotely:
-
-```text
-https://<SERVER_IP>:8443
-```
-
----
-
-## ⚠️ Notes
-
-- The generated SSL certificate is **self-signed** and intended for testing purposes.
-- Browsers will display a security warning because the certificate is not issued by a trusted Certificate Authority (CA).
-- The `certs/` directory is generated automatically when the script runs and should not be committed to the repository.
-
----
-
-## 📌 Technologies Used
+## Technologies Used
 
 - Bash
 - Docker
 - Nginx
 - OpenSSL
-- Linux System Administration
----
-## 📸 Project Demo
-The automation script successfully deploys a Dockerized Nginx server with HTTPS enabled and validates the deployment automatically.
----
+- Ubuntu Linux
 
-## 👨‍💻 Author
+## How to Run
 
-**Hany Hosny**
+Clone the repository:
 
-GitHub: https://github.com/Hany-Hosny
+```bash
+git clone -b feature/onboarding-automation https://github.com/Hany-Hosny/infra-automation.git
+cd infra-automation
+```
+
+Make the script executable:
+
+```bash
+chmod +x onboarding_automation.sh
+```
+
+Run the script:
+
+```bash
+sudo ./onboarding_automation.sh
+```
+
+## Access the Website
+
+HTTP
+
+```
+http://<SERVER_IP>:8080
+```
+
+HTTPS
+
+```
+https://<SERVER_IP>:8443
+```
+
+> Because a self-signed certificate is used, your browser will display a security warning. This is expected.
+
+## Health Check
+
+The deployment is verified automatically.
+
+Example:
+
+```bash
+curl -I http://localhost:8080
+```
+
+Expected response:
+
+```
+HTTP/1.1 301 Moved Permanently
+```
+
+## Demo
+
+![Project Demo](images/demo.png)
+
+## Future Improvements
+
+- Replace the self-signed certificate with Let's Encrypt.
+- Add Docker Compose support.
+- Integrate the deployment into a CI/CD pipeline using GitHub Actions.
+- Add automated testing before deployment.
+
+## Author
+
+**Hany Mohamed Hosny**
+
+- GitHub: https://github.com/Hany-Hosny
+- LinkedIn: https://www.linkedin.com/in/hany-h0sny/
