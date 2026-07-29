@@ -1,4 +1,4 @@
-# Infrastructure Automation & Secure Nginx Deployment
+# Infrastructure Automation & Dockerized HTTPS Nginx Deployment
 
 A production-ready Bash automation script that provisions a secure Linux environment, deploys a Dockerized Nginx web server with HTTPS support, and validates the deployment automatically.
 
@@ -34,10 +34,10 @@ The automation script performs the following tasks:
 - Redirects all HTTP requests to HTTPS.
 
 ### 5. Deployment Validation
-- Performs an automated health check.
-- Confirms the HTTP endpoint returns the expected **301 Redirect**.
-- Verifies that the container is running successfully.
 
+- Performs an automated health check against the HTTP endpoint.
+- Confirms the expected **301 Moved Permanently** redirect to HTTPS.
+- Verifies that the Nginx container is running successfully.
 ---
 
 ## 📁 Project Structure
@@ -115,7 +115,9 @@ https://<SERVER_IP>:8443
 - Nginx
 - OpenSSL
 - Linux System Administration
-
+---
+## 📸 Project Demo
+The automation script successfully deploys a Dockerized Nginx server with HTTPS enabled and validates the deployment automatically.
 ---
 
 ## 👨‍💻 Author
