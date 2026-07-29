@@ -54,7 +54,7 @@ infra-automation/
 
 ## 🛠️ Requirements
 
-- Rocky Linux
+- Rocky & Ubuntu Linux
 - Bash
 - OpenSSL
 - Docker
