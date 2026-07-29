@@ -12,7 +12,7 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-echo -e  "\n [1/4] Root execution verified. Starting configuration..."
+echo -e  "\n [1/5] Root execution verified. Starting configuration..."
 
 DEVELOPER_USER="dev_contractor"
 DEVELOPER_GROUP="dev_workflow"
@@ -32,7 +32,7 @@ echo "Task 1 Complete: User, Group, and Secured Directory are ready!"
 
 # --- 2. Audit & Port Hardening ---
 
-echo -e "\n [2/4] Printing System Health Report..."
+echo -e "\n [2/5] Printing System Health Report..."
 echo "----------------------------------------"
 echo "Current Active User: $(whoami)"
 echo "Internal IP Address: $(hostname -I | awk '{print $1}')"
@@ -42,15 +42,23 @@ echo "----------------------------------------"
 
 echo "Auditing active ports and purging legacy print/cups services..."
 
+# --- 3. Add TLS certificate
+echo -e "\n [3/5] Generating TLS Certificate..."
+mkdir -p  certs
+openssl req -x509 -nodes -days 365 -newkey rsa:2048\
+	-keyout certs/server.key\
+	-out certs/server.crt\
+	-subj "/CN=localhost"
+echo "Task 3 Complete: Self-signed TLS certificate generated."
 
-# --- 3. Containerization (Docker Architecture) ---
+# --- 4. Containerization (Docker Architecture) ---
 
-echo -e "\n [3/4] Configuring Docker Infrastructure..."
+echo -e "\n [4/5] Configuring Docker Infrastructure..."
 
 if ! command -v docker &> /dev/null; then
 
     echo "Docker not found. Installing Docker CE..."
-dnf config-manager --add-repo https://download.dns.com/linux/centos/docker-ce.repo &>/dev/null
+apt config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &>/dev/null
 dnf install docker-ce docker-ce-cli containerd.io -y &>/dev/null
 
 else
@@ -68,15 +76,18 @@ fi
 docker run -d \
   --name custom_webserver \
   -p 8080:80 \
+  -p 8443:8443 \
   -v /home/hany/infra-automation/index.html:/usr/share/nginx/html/index.html:ro \
+    -v /home/hany/infra-automation/nginx.conf:/etc/nginx/nginx.conf:ro \
+  -v /home/hany/infra-automation/certs:/etc/nginx/certs:ro \
   --restart always \
   nginx:alpine &>/dev/null
 
-echo "Task 3 Complete: Docker engine is active and developer permissions configured."
+echo "Task 4 Complete: Docker engine is active and developer permissions configured."
 
-# --- 4. Health Check Validation ---
+# --- 5. Health Check Validation ---
 
-echo -e "\n [4/4] Running Health Check Validation..."
+echo -e "\n [5/5] Running Health Check Validation..."
 sleep 3
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
@@ -84,7 +95,7 @@ STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
 echo "Checking local web endpoint on port 8080..."
 echo "Response HTTP Status Code: $STATUS_CODE"
 
-if [ "$STATUS_CODE" -eq 200 ]; then
+if [ "$STATUS_CODE" -eq 301 ]; then
         echo "Validation Success: Container is serving requests successfully."
 else
     echo "Validation Failed: Expected status 200, but got $STATUS_CODE"
